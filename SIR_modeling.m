@@ -22,13 +22,6 @@ inf(i+1) = (inf(i) + .10*(rec(i)));
 dec(1) = .05;
 dec(i+1) = (dec(i) + .01*(rec(i)));
 end
-%%
-%beta = (.05 * sus);%transmission coefficient
-%alpha = (.01 * inf); %death rate
-%immuac = (.1 * inf); %immuned people
-%immuno = (.04 * inf) + sus;
-%gamma = (.14 * inf);%recovery rate
-%parameters = [beta,gamma,immuac,immuno,gamma];
 
 %%plot the rates over time
 figure;
