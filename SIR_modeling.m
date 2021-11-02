@@ -1,7 +1,8 @@
 
 % making the sir base fit model
-t = 200;%number of days
+t = 1000;%number of days
 pop = sus+inf+rec+dec;
+sus = .75;
 inf = .10; %infection rate
 rec = .10; %recovery rate
 dec = .05; % death rate
