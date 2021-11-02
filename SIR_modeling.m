@@ -37,7 +37,7 @@ hold on
 plot(time, rec , 'b');
 plot(time, inf , 'g');
 plot(time, dec);
-title("Simulation of epidemic dynamics over a 200 day period");
+title("Simulation of epidemic dynamics over a 1000 day period");
 legend('susceptible', 'infected', 'recovered', 'deceased');
 xlabel('time (days)');
 ylabel('fraction population');
