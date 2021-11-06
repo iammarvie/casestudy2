@@ -1,43 +1,35 @@
-
+close all;
 % making the sir base fit model
 t = 1000;%number of days
-pop = sus+inf+rec+dec;
-sus = .75;
+
+sus = .75; %suseptibility rate
 inf = .10; %infection rate
 rec = .10; %recovery rate
 dec = .05; % death rate
-time = ones(0,t);
-time = 0:t; % time matrix
-sus = ones(1,t); % susceptibility matrix based on time
-rec = ones(1,t); %recovery matrix
-inf = ones(1,t); %infection matrix
-dec =  ones(1,t); %death matrix
-for i = 1:t %Loop that calculates the percentage over time(200)
-sus(1) = .75;
-sus(i+1) = (.95*sus(i))+ (.04*rec(i));
-rec(1) = .10;
-rec(i+1) = (.85*rec(i) + (.05*sus(i)));
-inf(1) = .10;
-inf(i+1) = (inf(i) + .10*(rec(i)));
-dec(1) = .05;
-dec(i+1) = (dec(i) + .01*(rec(i)));
-end
-%%
-%beta = (.05 * sus);%transmission coefficient
-%alpha = (.01 * inf); %death rate
-%immuac = (.1 * inf); %immuned people
-%immuno = (.04 * inf) + sus;
-%gamma = (.14 * inf);%recovery rate
-%parameters = [beta,gamma,immuac,immuno,gamma];
 
-%%plot the rates over time
+time = 1:t; % time matrix
+
+x_simulated = ones(4, t);% vector that stores percent population
+x_simulated(:,1) = [sus; inf; rec; dec;]; % initializing starting rates
+
+A = [0.95, 0.04, 0, 0;
+     0.05, 0.85, 0, 0;
+     0, 0.10, 1, 0;
+     0, 0.01, 0, 1;];
+
+for i = 2:t
+    x_simulated(:,i) = A*x_simulated(:,i-1);
+end
+
+ 
+%% plot the rates over time
 figure;
-plot(time, sus , 'r');
+plot(time, x_simulated(1,:) , 'r');
 hold on
-plot(time, rec , 'b');
-plot(time, inf , 'g');
-plot(time, dec);
-title("Simulation of epidemic dynamics over a 200 day period");
+plot(time, x_simulated(2,:), 'b');
+plot(time, x_simulated(3,:), 'g');
+plot(time, x_simulated(4,:));
+title("Simulation of epidemic dynamics over a 1000 day period");
 legend('susceptible', 'infected', 'recovered', 'deceased');
 xlabel('time (days)');
 ylabel('fraction population');
