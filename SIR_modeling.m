@@ -9,8 +9,9 @@ dec = .05; % death rate
 
 time = 1:t; % time matrix
 
-x_simulated = ones(4, t);% vector that stores percent population
-x_simulated(:,1) = [sus; inf; rec; dec;]; % initializing starting rates
+x_simulated = zeros(4, t);% vector that stores percent population
+x_simulated(:,1) = [0.9; 0.1; 0; 0;];
+%[sus; inf; rec; dec;]; % initializing starting rates
 
 A = [0.95, 0.04, 0, 0;
      0.05, 0.85, 0, 0;
@@ -18,7 +19,7 @@ A = [0.95, 0.04, 0, 0;
      0, 0.01, 0, 1;];
 
 for i = 2:t
-    x_simulated(:,i) = A*x_simulated(:,i-1);
+    x_simulated(:,i) = A*(x_simulated(:,i-1));
 end
 
  
