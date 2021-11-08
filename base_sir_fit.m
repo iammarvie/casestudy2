@@ -3,10 +3,14 @@
 % and loads them into a new matrix covidstlcity_full
 % In addition to this, you have other matrices for the other two regions in question
 
-covidstlcity_full = double(table2array(COVID_STLcity(:,[5:6])))./300000;
+%covidstlcity_full = double(table2array(COVID_STLcity(:,[5:6])))./300000;
 
-coviddata = ; % TO SPECIFY
-t = ; % TO SPECIFY
+stl = COVID_MO(string(COVID_MO.name) == 'St. Louis', :);
+springfield = COVID_MO(string(COVID_MO.name) == 'Springfield', :);
+jefferon = COVID_MO(string(COVID_MO.name) == 'Jefferson City', :);
+%%
+coviddata = double(table2array(stl(:,[3:4])))./2805473;
+t = height(stl);
 
 % The following line creates an 'anonymous' function that will return the cost (i.e., the model fitting error) given a set
 % of parameters.  There are some technical reasons for setting this up in this way.
@@ -15,6 +19,7 @@ t = ; % TO SPECIFY
 % and see the sectiono on 'passing extra arguments'
 % Basically, 'sirafun' is being set as the function siroutput (which you
 % will be designing) but with t and coviddata specified.
+%%
 sirafun= @(x)siroutput(x,t,coviddata);
 
 %% set up rate and initial condition constraints
@@ -41,12 +46,12 @@ ub = []';
 lb = []';
 
 % Specify some initial parameters for the optimizer to start from
-x0 = []; 
+x0 = [1,0,0,0,0,0,0]; 
 
 % This is the key line that tries to opimize your model parameters in order to
 % fit the data
 % note tath you 
-x = fmincon(sirafun,x0,A,b,Af,bf,lb,ub)
+x = fmincon(sirafun,x0,A,b,Af,bf,lb,ub);
 
 %plot(Y);
 %legend('S',L','I','R','D');
@@ -54,7 +59,7 @@ x = fmincon(sirafun,x0,A,b,Af,bf,lb,ub)
 
 Y_fit = siroutput_full(x,t);
 
-figure(1);
-
+figure();
+plot(Y_fit);
 % Make some plots that illustrate your findings.
 % TO ADD
