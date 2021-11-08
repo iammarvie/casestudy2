@@ -11,6 +11,7 @@ jefferon = COVID_MO(string(COVID_MO.name) == 'Jefferson City', :);
 %%
 coviddata = double(table2array(stl(:,[3:4])))./2805473;
 t = height(stl);
+dates =  table2array(stl(:,1)); 
 
 % The following line creates an 'anonymous' function that will return the cost (i.e., the model fitting error) given a set
 % of parameters.  There are some technical reasons for setting this up in this way.
@@ -61,13 +62,19 @@ x = fmincon(sirafun,x0,A,b,Af,bf,lb,ub);
 
 Y_fit = siroutput_full(x,t);
 
+
+% Test Plot over all st louis data
 figure();
 hold on;
-plot(Y_fit);
-plot(coviddata);
+plot(datenum(dates),Y_fit);
+plot(datenum(dates),coviddata);
+datetick('x', 'yyyy-mm-dd','keepticks');
 hold off;
 legend('S','I','R','D','Actual Cases', 'Actual Deaths');
-xlabel('Time')
+xlabel('Dates')
 ylabel('Percentage Population')
+title('SIRD Fit for all STL Data')
+
+
 % Make some plots that illustrate your findings.
 % TO ADD
