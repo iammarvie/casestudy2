@@ -34,21 +34,21 @@ b = [];
 % Hint: For example, the sum of the initial conditions should be
 % constrained
 % If you don't want such a constraint, keep these matrices empty.
-Af = [];
-bf = [];
+Af = [0 1 1 1 1 0 0 0 0; 0 0 0 0 0 1 1 1 1];
+bf = [1; 1];
 
 %% set up upper and lower bound constraints
 % Set upper and lower bounds on the parameters
 % lb < x < ub
 % here, the inequality is imposed element-wise
 % If you don't want such a constraint, keep these matrices empty.
-ub = []';
-lb = []';
+ub = [0.30, 1, 0.1, 1, 0.5, 1, 0.7, 1, 0.1]';
+lb = [0, 0, 0, 0, 0, .90, 0, 0, 0]';
 
 % Specify some initial parameters for the optimizer to start from
 % form of x = [new_infections, continued infections, fatalities, recovery with immunity, initial S, intial I, initial R, initial D]
 
-x0 = [0.05,0.85,0.01,0.1,1,0,0,0]; 
+x0 = [0.05,0.85,0.01,0.1, 0.04,1,0,0,0]; 
 
 % This is the key line that tries to opimize your model parameters in order to
 % fit the data
