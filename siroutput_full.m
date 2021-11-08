@@ -19,7 +19,10 @@ ic_rec = x(6);
 ic_fatality = x(7);
 
 % Set up SIRD within-population transmission matrix
-A = [];
+A = [0.95, 0.04, 0, 0;
+     0.05, 0.85, 0, 0;
+     0, 0.10, 1, 0;
+     0, 0.01, 0, 1;];
 
 % The next line creates a zero vector that will be used a few steps.
 B = zeros(4,1);
