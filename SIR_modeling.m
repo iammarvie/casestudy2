@@ -1,4 +1,4 @@
-close all;
+
 % making the sir base fit model
 t = 1000;%number of days
 
