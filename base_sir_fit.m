@@ -13,6 +13,10 @@ coviddata = double(table2array(stl(:,[3:4])))./2805473;
 t = height(stl);
 dates =  table2array(stl(:,1)); 
 
+springfield_all = 
+
+
+
 % The following line creates an 'anonymous' function that will return the cost (i.e., the model fitting error) given a set
 % of parameters.  There are some technical reasons for setting this up in this way.
 % Feel free to peruse the MATLAB help at
@@ -76,5 +80,6 @@ ylabel('Percentage Population')
 title('SIRD Fit for all STL Data')
 
 
-% Make some plots that illustrate your findings.
-% TO ADD
+% Other Plots
+
+
