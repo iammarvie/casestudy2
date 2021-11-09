@@ -19,10 +19,15 @@ ic_fatality = x(9);
 
 
 % Set up SIRD within-population transmission matrix
+<<<<<<< Updated upstream
 % This assumes immunity does not decay
 
 A = [(1-k_new_infections),k_recover_s, 0, 0;
      k_new_infections, k_infections, 0, 0;
+=======
+A = [1-k_infections, 0, 0, 0;
+     k_infections, 1-k_recover, 0, 0;
+>>>>>>> Stashed changes
      0, k_recover, 1, 0;
      0, k_fatality, 0, 1;];
 B = zeros(4,1);

@@ -5,6 +5,8 @@
 
 %covidstlcity_full = double(table2array(COVID_STLcity(:,[5:6])))./300000;
 
+load('COVIDdata.mat');
+
 stl = COVID_MO(string(COVID_MO.name) == 'St. Louis', :);
 springfield = COVID_MO(string(COVID_MO.name) == 'Springfield', :);
 jefferon = COVID_MO(string(COVID_MO.name) == 'Jefferson City', :);
@@ -35,12 +37,33 @@ springfield_all = double(table2array(springfield(:,[3:4])))./475220;
 jefferson_all = double(table2array(jefferon(:,[3:4])))./150198;
 
 %%
+<<<<<<< Updated upstream
 
 coviddata = spring_period2_array;
 period = spring_period2;
 t = height(coviddata);
 dates =  table2array(period(:,1)); 
 
+=======
+coviddata = double(table2array(stl(:,(3:4))))./2805473;
+
+springfield_pop = populations_MO(string(populations_MO.name) == 'Springfield', 2);
+coviddata_springfield = double(table2array(springfield(:,[3:4])))./springfield_pop.Variables;
+
+jefferson_pop = populations_MO(string(populations_MO.name) == 'Jefferson City', 2);
+coviddata_jefferson = double(table2array(jefferon(:,[3,4])))./jefferson_pop.Variables;
+
+t = height(stl);
+
+% The following line creates an 'anonymous' function that will return the cost (i.e., the model fitting error) given a set
+% of parameters.  There are some technical reasons for setting this up in this way.
+% Feel free to peruse the MATLAB help at
+% https://www.mathworks.com/help/optim/ug/fmincon.html
+% and see the sectiono on 'passing extra arguments'
+% Basically, 'sirafun' is being set as the function siroutput (which you
+% will be designing) but with t and coviddata specified.
+%%
+>>>>>>> Stashed changes
 sirafun= @(x)siroutput(x,t,coviddata);
 
 %% set up rate and initial condition constraints
@@ -99,6 +122,7 @@ title("SIRD Fit for Springfield Data from " + datestr(dates(1)) + " to " + dates
 % Other Plots
 %%
 figure();
+<<<<<<< Updated upstream
 hold on;
 plot(datenum(dates),Y_fit);
 plot(datenum(dates),coviddata);
@@ -110,3 +134,25 @@ ylabel('Percentage Population')
 title('SIRD Fit for all Springfield Data')
 
 
+=======
+plot(Y_fit);
+% Make some plots that illustrate your findings.
+% TO ADD
+
+figure();
+plot(stl.date,coviddata(:,1),'r');
+hold on;
+plot(stl.date,coviddata(:,2),'b');
+
+%%
+figure();
+plot(springfield.date, coviddata_springfield(:,1),'r');
+hold on;
+plot(springfield.date, coviddata_springfield(:,2),'b');
+
+%%
+figure();
+plot(jefferon.date, coviddata_jefferson(:,1),'r');
+hold on;
+plot(jefferon.date, coviddata_jefferson(:,2),'b');
+>>>>>>> Stashed changes
