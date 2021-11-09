@@ -18,16 +18,16 @@ stl_period2_array = double(table2array(period2(:,[3:4])))./2805473;
 stl_period3_array = double(table2array(period3(:,[3:4])))./2805473;
 %% Dates of interest for springfield
 spring_period1 = springfield(isbetween(springfield.date,datetime('2020-11-02'),datetime('2021-01-31')), :);
-spring_period2 = springfield(isbetween(springfield.date,datetime('2021-06-08'),datetime('2021-09-15')), :);
+spring_period2 = springfield(isbetween(stl.date,datetime('2021-06-08'),datetime('2021-09-15')), :);
 
-spring_period1_array = double(table2array(spring_period1(:,[3:4])))./475220;
-spring_period2_array = double(table2array(spring_period2(:,[3:4])))./475220;
+spring_period1_array = double(table2array(period1(:,[3:4])))./475220;
+spring_period2_array = double(table2array(period2(:,[3:4])))./475220;
 %% Dates of interest for Jefferson
-jeff_period1 = jefferon(isbetween(jefferon.date,datetime('2020-11-02'),datetime('2021-01-31')), :);
-jeff_period2 = jefferon(isbetween(jefferon.date,datetime('2021-06-08'),datetime('2021-09-15')), :);
+jeff_period1 = stl(isbetween(stl.date,datetime('2020-11-02'),datetime('2021-01-31')), :);
+jeff_period2 = stl(isbetween(stl.date,datetime('2021-06-08'),datetime('2021-09-15')), :);
 
-jeff_period1_array = double(table2array(jeff_period1(:,[3:4])))./150198;
-jeff_period2_array = double(table2array(jeff_period2(:,[3:4])))./150198;
+jeff_period1_array = double(table2array(period1(:,[3:4])))./475220;
+jeff_period2_array = double(table2array(period2(:,[3:4])))./475220;
 
 %% Data for the entire range
 stl_all = double(table2array(stl(:,[3:4])))./2805473;
@@ -35,12 +35,23 @@ springfield_all = double(table2array(springfield(:,[3:4])))./475220;
 jefferson_all = double(table2array(jefferon(:,[3:4])))./150198;
 
 %%
-
 coviddata = spring_period2_array;
 period = spring_period2;
 t = height(coviddata);
 dates =  table2array(period(:,1)); 
 
+
+%%
+
+
+% The following line creates an 'anonymous' function that will return the cost (i.e., the model fitting error) given a set
+% of parameters.  There are some technical reasons for setting this up in this way.
+% Feel free to peruse the MATLAB help at
+% https://www.mathworks.com/help/optim/ug/fmincon.html
+% and see the sectiono on 'passing extra arguments'
+% Basically, 'sirafun' is being set as the function siroutput (which you
+% will be designing) but with t and coviddata specified.
+%%
 sirafun= @(x)siroutput(x,t,coviddata);
 
 %% set up rate and initial condition constraints
