@@ -30,17 +30,17 @@ ic_fatality = x(12);
 % No one in lockdown gets infected, they reneter susptable population after
 % a while.
 
-A = [(1-k_new_infections-k_new_lockdown),k_recover_s,  0, 1-k_lockdown,0;
-     k_new_infections,                  k_infections, 0, 0,0;
-     0,                                 k_recover,    1, 0,0;
-     k_new_lockdown,                    0,            0, k_lockdown,0;
-     0,                                 k_fatality,   0, 0,1;];
+A = [(1-k_new_infections-k_new_lockdown),   1-k_lockdown, k_recover_s,  0,   0;
+     k_new_lockdown,                        k_lockdown,          0   ,  0,   0;
+     k_new_infections,                               0, k_infections,   0,   0;
+     0,                                              0, k_recover,      1,   0;
+     0,                                              0, k_fatality,     0,   1;];
 
 % The next line creates a zero vector that will be used a few steps.
 B = zeros(5,1);
 
 % Set up the vector of initial conditions
-x0 = [ic_susc ic_inf ic_rec ic_lock ic_fatality];
+x0 = [ic_susc ic_lock ic_inf ic_rec  ic_fatality];
 
 % Here is a compact way to simulate a linear dynamical system.
 % Type 'help ss' and 'help lsim' to learn about how these functions work!!
