@@ -36,8 +36,8 @@ jefferson_all = double(table2array(jefferon(:,[3:4])))./150198;
 
 %% Select the Data to be fit
 
-coviddata = jeff_period2_array;
-period = jeff_period2;
+coviddata = spring_period2_array;
+period = spring_period2;
 t = height(coviddata);
 dates =  table2array(period(:,1)); 
 
@@ -94,7 +94,7 @@ hold off;
 legend('S','L','I','R','D','Actual Cases', 'Actual Deaths');
 xlabel('Dates')
 ylabel('Percentage Population')
-title("SLIRD Fit for Jefferson City Data from " + datestr(dates(1)) + " to " + datestr(dates(length(dates))))
+title("SLIRD Fit for Springfield Data from " + datestr(dates(1)) + " to " + datestr(dates(length(dates))))
 
 
 % Other Plots
