@@ -41,7 +41,7 @@ period = spring_period2;
 t = height(coviddata);
 dates =  table2array(period(:,1)); 
 
-sirafun= @(x)siroutput(x,t,coviddata);
+sirafun= @(x)sirloutput(x,t,coviddata);
 
 %% set up rate and initial condition constraints
 % Set A and b to impose a parameter inequality constraint of the form A*x < b
@@ -55,7 +55,8 @@ b = [];
 % Hint: For example, the sum of the initial conditions should be
 % constrained
 % If you don't want such a constraint, keep these matrices empty.
-Af = [1 1 1 1 1 0 0 0 0; 0 0 0 0 0 1 1 1 1];
+%form of x = [new_infections, continued infections, fatalities, recovery with immunity, initial S, intial I, initial R, initial D]
+Af = [1 1 1 1 1 1 1 0 0 0 0 0; 0 0 0 0 0 0 0 1 1 1 1 1];
 bf = [1; 1];
 
 %% set up upper and lower bound constraints
@@ -63,13 +64,13 @@ bf = [1; 1];
 % lb < x < ub
 % here, the inequality is imposed element-wise
 % If you don't want such a constraint, keep these matrices empty.
-ub = [0.30, .995, 0.1, 1, 0.5, 1, 0.7, 1, 0.1]';
-lb = [0, 0, 0, 0, 0, .90, 0, 0, 0]';
+ub = [0.30, .995, 0.1, 1, 0.5, 0.5, 1, 1, 0.7, 1, 0.2, 0.1]';
+lb = [0, 0, 0, 0, 0, 0, 0,.90, 0, 0, 0, 0]';
 
 % Specify some initial parameters for the optimizer to start from
 % form of x = [new_infections, continued infections, fatalities, recovery with immunity, initial S, intial I, initial R, initial D]
 
-x0 = [0.05,0.85,0.01,0.1, 0.04,1,0,0,0]; 
+x0 = [0.05,0.85,0.01,0.1,0,0,0.04,1,0,0,0,0]; 
 
 % This is the key line that tries to opimize your model parameters in order to
 % fit the data
@@ -80,7 +81,7 @@ x = fmincon(sirafun,x0,A,b,Af,bf,lb,ub);
 %legend('S',L','I','R','D');
 %xlabel('Time')
 
-Y_fit = siroutput_full(x,t);
+Y_fit = sirloutput_full(x,t);
 
 %%
 % Test Plot over all st louis data
@@ -90,7 +91,7 @@ plot(datenum(dates),Y_fit);
 plot(datenum(dates),coviddata);
 datetick('x', 'yyyy-mm-dd','keepticks');
 hold off;
-legend('S','I','R','D','Actual Cases', 'Actual Deaths');
+legend('S','I','R','L','D','Actual Cases', 'Actual Deaths');
 xlabel('Dates')
 ylabel('Percentage Population')
 title("SIRD Fit for Springfield Data from " + datestr(dates(1)) + " to " + datestr(dates(length(dates))))
