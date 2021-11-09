@@ -83,7 +83,9 @@ x = fmincon(sirafun,x0,A,b,Af,bf,lb,ub);
 
 Y_fit = sirloutput_full(x,t);
 
-%%
+%% Plots were created here 
+
+
 % Test Plot over all st louis data
 figure();
 hold on;
@@ -97,17 +99,6 @@ ylabel('Percentage Population')
 title("SLIRD Fit for Jefferson City Data from " + datestr(dates(1)) + " to " + datestr(dates(length(dates))))
 
 
-% Other Plots
-%%
-figure();
-hold on;
-plot(datenum(dates),Y_fit);
-plot(datenum(dates),coviddata);
-datetick('x', 'yyyy-mm-dd','keepticks');
-hold off;
-legend('S','I','R','D','Actual Cases', 'Actual Deaths');
-xlabel('Dates')
-ylabel('Percentage Population')
-title('SIRD Fit for all Springfield Data')
+
 
 
