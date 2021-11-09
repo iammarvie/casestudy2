@@ -36,8 +36,8 @@ jefferson_all = double(table2array(jefferon(:,[3:4])))./150198;
 
 %% Select the Data to be fit
 
-coviddata = jeff_period2_array;
-period = jeff_period2;
+coviddata = jefferson_all ;
+period = jefferon;
 t = height(coviddata);
 dates =  table2array(period(:,1)); 
 
