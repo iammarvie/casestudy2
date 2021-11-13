@@ -47,7 +47,7 @@ current_policy = [(1-k_new_infections-k_new_lockdown),   1-k_lockdown, k_recover
      0,                                              0, k_fatality,     0,   1;];
  
  
- 
+ %%
  Y_with_Policy = zeros(5, t);
  Y_with_Policy(:,1) = x0(8:12);
 
